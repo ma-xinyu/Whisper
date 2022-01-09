@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tape.dao.IArticleDao">
+    <resultMap id="BaseResultMap" type="com.tape.entity.Article">
+        <id column="article_id" property="articleId" jdbcType="INTEGER"/>
+        <result column="article_user_id" property="articleUserId" jdbcType="INTEGER"/>
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR"/>
+        <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR"/>
+        <result column="article_summary" property="articleSummary" jdbcType="VARCHAR"/>
+        <result column="article_view_count" property="articleViewCount" jdbcType="INTEGER"/>
+        <result column="article_comment_count" property="articleCommentCount" jdbcType="INTEGER"/>
+        <result column="article_like_count" property="articleLikeCount" jdbcType="INTEGER"/>
+        <result column="article_is_comment" property="articleIsComment" jdbcType="INTEGER"/>
+        <result column="article_order" property="articleOrder" jdbcType="INTEGER"/>
+        <result column="article_create_time" property="articleCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="article_update_time" property="articleUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="article_status" property="articleStatus" jdbcType="INTEGER"/>
+        <result column="article_thumbnail" property="articleThumbnail" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="tb">article</sql>
+
+    <sql id="Base_Column_List">
+        article_id, article_user_id, article_title, article_content,article_summary, article_view_count, article_comment_count, article_like_count, article_create_time,
+    article_update_time, article_is_comment, article_status, article_order, article_thumbnail
+    </sql>
+
+    <!--获取文章总数-->
+    <select id="countArticle" resultType="Integer">
+        SELECT COUNT(*) FROM
+        <include refid="tb"/>
+        WHERE article_status = 1
+    </select>
+
+    <select id="listAllNotWithContent" resultType="com.tape.entity.Article">
+        SELECT
+        article_id, article_user_id, article_title, article_create_time, article_thumbnail
+        FROM
+        <include refid="tb"/>
+        WHERE article_status = 1
+        ORDER BY article_id DESC
+    </select>
+
+</mapper>
